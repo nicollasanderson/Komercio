@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate
-from django.shortcuts import render
 
 from rest_framework import generics 
 from rest_framework import status
