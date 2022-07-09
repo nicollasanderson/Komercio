@@ -7,7 +7,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 
 from .models import User
-from .serializers import AccountSerializer, LoginSerializer
+from .serializers import AccountSerializer, ActiveDeactiveSerializer, LoginSerializer
+from rest_framework.authentication import TokenAuthentication
+from .permissions import IsSuperUserPermission, IsUserOwnerPermission
 
 # Create your views here.
 
@@ -43,3 +45,15 @@ class LoginView(APIView):
             return Response({'token': token.key})
 
         return Response({"detail":"invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
+
+class UpdateUserView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = AccountSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsUserOwnerPermission]
+
+class ActivedeactivateUserView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = ActiveDeactiveSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsSuperUserPermission]

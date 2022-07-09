@@ -34,3 +34,8 @@ class AccountSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
+
+class ActiveDeactiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['is_active']
