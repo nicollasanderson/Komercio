@@ -15,8 +15,6 @@ class IsSellerOrGetPermission(permissions.BasePermission):
 
 class IsOwnerPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        print(obj.__dict__)
-        print(request.user.__dict__)
         if request.method in permissions.SAFE_METHODS:
             return True
 
