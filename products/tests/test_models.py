@@ -5,13 +5,14 @@ from user.models import User
 
 # Create your tests here.
 
+
 class ProductsModelTest(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.first_name = "Nícollas"
         cls.last_name = "Anderson"
-        cls.email = 'teste@teste.com'
-        cls.password = '1234'
+        cls.email = "teste@teste.com"
+        cls.password = "1234"
         cls.is_seller = True
 
         cls.user = User.objects.create(
@@ -19,7 +20,7 @@ class ProductsModelTest(TestCase):
             last_name=cls.last_name,
             email=cls.email,
             password=cls.password,
-            is_seller=cls.is_seller
+            is_seller=cls.is_seller,
         )
 
         cls.description = "Uma descrição muito boa aqui."
@@ -33,15 +34,21 @@ class ProductsModelTest(TestCase):
             quantity=cls.quantity,
             seller=cls.user,
         )
+
     def test_product_owner(self):
         user = User.objects.get(id=1)
 
         product = Product.objects.get(id=1)
-        
-        self.assertEquals(product.seller,user)
+
+        self.assertEquals(product.seller, user)
 
     def test_correct_names(self):
-        ...
+        product = Product.objects.get(id=1)
+
+        self.assertEqual(product.description, self.description)
+        self.assertEqual(product.price, self.price)
+        self.assertEqual(product.quantity, self.quantity)
+        self.assertEqual(product.seller, self.seller)
 
     def test_not_null_fields(self):
         product = Product.objects.get(id=1)

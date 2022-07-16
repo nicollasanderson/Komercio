@@ -1,8 +1,19 @@
 from django.contrib.auth.models import BaseUserManager
 from django.utils import timezone
 
+
 class CustomUserManager(BaseUserManager):
-    def _create_user(self, email, first_name,last_name,is_staff, is_superuser, password ,is_seller = False,**extra_fields):
+    def _create_user(
+        self,
+        email,
+        first_name,
+        last_name,
+        is_staff,
+        is_superuser,
+        password,
+        is_seller=False,
+        **extra_fields
+    ):
         now = timezone.now()
 
         if not email:
@@ -28,8 +39,12 @@ class CustomUserManager(BaseUserManager):
 
         return user
 
-    def create_user(self, email,first_name,last_name,password=None, **extra_fields):
-        return self._create_user(email,first_name,last_name,False,False,password,username=email **extra_fields)
+    def create_user(self, email, first_name, last_name, password=None, **extra_fields):
+        return self._create_user(
+            email, first_name, last_name, False, False, password, **extra_fields
+        )
 
-    def create_superuser(self, email,first_name,last_name,password, **extra_fields):
-        return self._create_user(email,first_name,last_name,True,True,password, **extra_fields)
+    def create_superuser(self, email, first_name, last_name, password, **extra_fields):
+        return self._create_user(
+            email, first_name, last_name, True, True, password, **extra_fields
+        )
